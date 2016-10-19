@@ -1,0 +1,20 @@
+machine:
+  pre:
+    - pyenv install -s 2.7.10
+    - pyenv install -s 3.4.4
+    - pyenv install -s 3.5.1
+    - pyenv global 2.7.10 3.4.4 3.5.1
+    - pyenv rehash
+
+dependencies:
+  cache_directories:
+    - /opt/circleci/.pyenv
+    - ~/.cache/pip/
+    - ~/gist/.tox
+
+  pre:
+    - ln -sf deploy.mk Makefile
+
+ptest:
+  override:
+    - make sync
