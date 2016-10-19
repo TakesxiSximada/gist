@@ -90,3 +90,6 @@ ENV/
 
 #
 Makefile
+vendor
+.bundle
+Gemfile.lock
