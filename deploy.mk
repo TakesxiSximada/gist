@@ -12,3 +12,9 @@ install:
 	@# install tool chain
 
 	bundle install --path vendor
+
+.PHONY: sync
+sync:
+	@# install tool chain
+
+	echo aaaa
