@@ -112,6 +112,7 @@ def get_files(config, target):
 
 
 def get_title(config, target, files):
+    title = None
     try:
         title = config.get('gist-sync', 'title').strip()
     except six.moves.configparser.NoSectionError:
