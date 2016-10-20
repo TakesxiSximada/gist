@@ -123,6 +123,32 @@ def get_title(config, target, files):
     return title or get_title_from_files(files)
 
 
+def get_cache_dir(config, target):
+    cache_dir = None
+    try:
+        cache_dir = config.get('gist-sync', 'cache_dir').strip()
+    except six.moves.configparser.NoSectionError:
+        logger.debug('no section: title: %s', target)
+        config.add_section('gist-sync')
+    except six.moves.configparser.NoOptionError:
+        logger.debug('no option: title: %s', target)
+    if not cache_dir:
+        cache_dir = '.gist-sync'
+        config.set('gist-sync', 'cache_dir', cache_dir)
+    return cache_dir
+
+
+def get_commit_hash(config, target):
+    try:
+        return config.get('gist-sync', 'commit').strip()
+    except six.moves.configparser.NoSectionError:
+        logger.debug('no section: commit: %s', target)
+        config.add_section('gist-sync')
+    except six.moves.configparser.NoOptionError:
+        logger.debug('no option: commit: %s', target)
+    return None
+
+
 def sync_gist(target):
     if not os.path.isdir(target):
         logger.debug('ignore: not directory: %s', target)
@@ -142,20 +168,32 @@ def sync_gist(target):
 
     if url:  # update
         gist_id = get_gist_id(url)
-        with contextlib.closing(TemporaryDirAdapter(tempfile.mkdtemp())) as tmpdir:
-            cmd = ['clone', gist_id, tmpdir.path]
+        cache_dir_name = get_cache_dir(config, target)
+        gist_sync_cache_dir = os.path.join(target, cache_dir_name)
+        if not os.path.exists(gist_sync_cache_dir):
+            cmd = ['clone', gist_id, gist_sync_cache_dir]
             gist.main(cmd)
-            for filepath in files:
-                shutil.copy(filepath, tmpdir.path)
-            cur = os.getcwd()
-            os.chdir(tmpdir.path)
+        else:
+            with contextlib.closing(ChangeDirectory(gist_sync_cache_dir)):
+                repo = git.Repo(search_parent_directories=True)
+                remote = repo.remote('origin')
+                remote.pull()
+
+        for filepath in files:
+            shutil.copy(filepath, gist_sync_cache_dir)
+
+        with contextlib.closing(ChangeDirectory(gist_sync_cache_dir)):
             repo = git.Repo(search_parent_directories=True)
+            if not repo.is_dirty():
+                logger.debug('ignore: %s', target)
+                return SyncStatus.ignore.value, url
+
             filenames = [os.path.basename(filepath) for filepath in files]
             repo.index.add(filenames)
             repo.index.commit('update content')
             remote = repo.remote('origin')
             remote.push()
-        os.chdir(cur)
+
         gist.main(['description', gist_id, title])
         return SyncStatus.updated.value, url
     else:  # create
@@ -164,9 +202,6 @@ def sync_gist(target):
         url = gist.main(cmd)
         config.set('gist-sync', 'url', url)
 
-        with open(gist_conf_path, 'w+t') as fp:
-            config.write(fp)
-
         with contextlib.closing(ChangeDirectory(target)):
             conf_path = os.path.relpath(gist_conf_path, os.getcwd())
             repo = git.Repo(search_parent_directories=True)
@@ -174,7 +209,20 @@ def sync_gist(target):
             repo.index.commit('add gist.conf file')
             remote = repo.remote('origin')
             remote.push()
-            return SyncStatus.created.value, url
+
+        gist_id = get_gist_id(url)
+        cache_dir_name = get_cache_dir(config, target)
+        gist_sync_cache_dir = os.path.join(target, cache_dir_name)
+        if not os.path.exists(gist_sync_cache_dir):
+            cmd = ['clone', gist_id, os.path.join(target, gist_sync_cache_dir)]
+            gist.main(cmd)
+        else:
+            logger.error('cannot clone gist: cache dir exists: %s', gist_sync_cache_dir)
+            return SyncStatus.fail.value, url
+
+        with open(gist_conf_path, 'w+t') as fp:
+            config.write(fp)
+        return SyncStatus.created.value, url
 
 
 def main(argv=sys.argv[1:]):
