@@ -70,7 +70,7 @@ def get_gist_id(url):
     return url.split('/')[3]
 
 
-def get_title(files):
+def get_title_from_files(files):
     regx = re.compile('README.*$', re.I)
     for path in files:
         name = os.path.basename(path)
@@ -81,6 +81,45 @@ def get_title(files):
                          .lstrip('#') \
                          .strip()
     return 'no title'
+
+
+def get_url(config, target):
+    try:
+        return config.get('gist-sync', 'url')
+    except six.moves.configparser.NoSectionError:
+        logger.debug('no section: create gist: %s', target)
+        config.add_section('gist-sync')
+    except six.moves.configparser.NoOptionError:
+        logger.debug('no option: create gist: %s', target)
+
+
+def get_files(config, target):
+    try:
+        files = list(map(
+            lambda name: os.path.join(target, name.strip()),
+            config.get('gist-sync', 'files').split()
+        ))
+    except six.moves.configparser.NoOptionError:
+        files = []
+
+    if not files:
+        logger.warning('no files: add README.md: %s', target)
+        for pattern in ('readme*', 'README*'):
+            files.extend(
+                glob.glob(
+                    os.path.join(target, pattern)))
+    return files
+
+
+def get_title(config, target, files):
+    try:
+        title = config.get('gist-sync', 'title').strip()
+    except six.moves.configparser.NoSectionError:
+        logger.debug('no section: title: %s', target)
+        config.add_section('gist-sync')
+    except six.moves.configparser.NoOptionError:
+        logger.debug('no option: title: %s', target)
+    return title or get_title_from_files(files)
 
 
 def sync_gist(target):
@@ -96,40 +135,9 @@ def sync_gist(target):
     config = config_parser_factory()
     config.read(gist_conf_path)
 
-    url = None
-    try:
-        url = config.get('gist-sync', 'url')
-    except six.moves.configparser.NoSectionError:
-        logger.debug('no section: create gist: %s', target)
-        config.add_section('gist-sync')
-    except six.moves.configparser.NoOptionError:
-        logger.debug('no option: create gist: %s', target)
-
-    try:
-        files = list(map(
-            lambda name: os.path.join(target, name.strip()),
-            config.get('gist-sync', 'files').split()
-        ))
-    except six.moves.configparser.NoOptionError:
-        files = []
-
-    if not files:
-        logger.warning('no files: add README.md: %s', target)
-        for pattern in ('readme*', 'README*'):
-            files.extend(
-                glob.glob(
-                    os.path.join(target, pattern)))
-
-    title = None
-    try:
-        title = config.get('gist-sync', 'title')
-    except six.moves.configparser.NoSectionError:
-        logger.debug('no section: title: %s', target)
-        config.add_section('gist-sync')
-    except six.moves.configparser.NoOptionError:
-        logger.debug('no option: title: %s', target)
-    if title is None:
-        title = get_title(files)
+    url = get_url(config, target)
+    files = get_files(config, target)
+    title = get_title(config, target, files)
 
     if url:  # update
         gist_id = get_gist_id(url)
