@@ -17,4 +17,4 @@ install:
 sync:
 	@# install tool chain
 
-	echo aaaa
+	python bin/gist-sync.py *
