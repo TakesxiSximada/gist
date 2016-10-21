@@ -201,14 +201,6 @@ def sync_gist(target):
         url = gist.main(cmd)
         config.set('gist-sync', 'url', url)
 
-        with contextlib.closing(ChangeDirectory(target)):
-            conf_path = os.path.relpath(gist_conf_path, os.getcwd())
-            repo = git.Repo(search_parent_directories=True)
-            repo.index.add([conf_path])
-            repo.index.commit('add gist.conf file')
-            remote = repo.remote('origin')
-            remote.push()
-
         gist_id = get_gist_id(url)
         cache_dir_name = get_cache_dir(config, target)
         gist_sync_cache_dir = os.path.join(target, cache_dir_name)
@@ -221,6 +213,15 @@ def sync_gist(target):
 
         with open(gist_conf_path, 'w+t') as fp:
             config.write(fp)
+
+        with contextlib.closing(ChangeDirectory(target)):
+            conf_path = os.path.relpath(gist_conf_path, os.getcwd())
+            repo = git.Repo(search_parent_directories=True)
+            repo.index.add([conf_path])
+            repo.index.commit('add gist.conf file')
+            remote = repo.remote('origin')
+            remote.push()
+
         return SyncStatus.created.value, url
 
 
