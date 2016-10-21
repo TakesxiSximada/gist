@@ -93,3 +93,4 @@ Makefile
 vendor
 .bundle
 Gemfile.lock
+.gist-sync
