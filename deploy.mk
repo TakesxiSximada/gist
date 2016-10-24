@@ -18,3 +18,9 @@ sync:
 	@# install tool chain
 
 	python bin/gist-sync.py *
+
+.PHONY: list
+list:
+	@# list gists
+
+	head -n 1 $$(ls */README.md)
