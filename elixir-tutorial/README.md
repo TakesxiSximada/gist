@@ -156,10 +156,9 @@ iex(14)> Task.yield_many(tasks)
   {:ok, :ok}}]
 ```
 
-yield_many()が5秒強で完了してきますので意図している挙動になっていると言えます。
+yield_many()が5秒強で完了します。
 
 scriptも書いて実行してみます。
-
 
 delay_task.exs:
 
@@ -176,4 +175,4 @@ $ time elixir delay_task.exs
 elixir delay_task.exs  0.40s user 0.22s system 11% cpu 5.460 total
 ```
 
-5.460秒で完了しました。
+5.460秒で完了しました。意図している挙動になっていると言えます。
