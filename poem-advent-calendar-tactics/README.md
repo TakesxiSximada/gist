@@ -441,11 +441,11 @@ https://qiita.com/advent-calendar/2015/ranking/subscriptions/all
 14. -
 15. -
 16. -
-17. -
+17. [Git](http://qiita.com/advent-calendar/2016/git)
 18. -
 19. -
-20. -
-21. -
+20. [Django](http://qiita.com/advent-calendar/2016/django)
+21. [Goその2](http://qiita.com/advent-calendar/2016/go2)
 22. -
 23. -
 24. [Python](http://qiita.com/advent-calendar/2016/python)
