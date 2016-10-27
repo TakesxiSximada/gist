@@ -422,3 +422,31 @@ https://qiita.com/advent-calendar/2015/ranking/subscriptions/all
   - TensorFlowを試してみる
 
 この中か記述できそうなものをピックアップして使う。
+
+## 2016年に参加するアドベントカレンダー
+
+1. [Elixir](http://qiita.com/advent-calendar/2016/elixir)
+2. [Perfume](http://www.adventar.org/calendars/1430)
+3. -
+4. [フリーランスの今年とお金の話](http://www.adventar.org/calendars/1407)
+5. -
+6. -
+7. -
+8. -
+9. -
+10. -
+11. [クローラー／Webスクレイピング](http://qiita.com/advent-calendar/2016/python)
+12. -
+13. [SHIROBAKO](http://www.adventar.org/calendars/1343)
+14. -
+15. -
+16. -
+17. -
+18. -
+19. -
+20. -
+21. -
+22. -
+23. -
+24. [Python](http://qiita.com/advent-calendar/2016/python)
+25. -
