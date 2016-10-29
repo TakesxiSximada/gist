@@ -196,7 +196,7 @@ def sync_gist(target):
         gist.main(['description', gist_id, title])
         return SyncStatus.updated.value, url
     else:  # create
-        cmd = ['create', title, '--public']
+        cmd = ['create', title]
         cmd.extend(files)
         url = gist.main(cmd)
         config.set('gist-sync', 'url', url)
