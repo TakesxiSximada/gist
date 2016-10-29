@@ -5,7 +5,7 @@ OS Xを使っているとIEやEdgeが動作しないので動作確認できま�
 今回はVirtualbox用のイメージをダウンロードして使います。(Virtualboxはすでにインストール済みとします)
 
 https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
-![Windows仮想マシンイメージのダウンロードページ](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/)
+![Windows仮想マシンイメージのダウンロードページ](https://github.com/TakesxiSximada/gist/blob/master/windows-virtual-machines/download-windows-vm.png)
 
 1. 使いたいVirtual machineを選ぶ
 2. 使用するプラットフォームを選ぶ
@@ -23,7 +23,7 @@ $ 7z e ~/Desktop/MSEdge.Win10_RS1.VirtualBox.zip
 メモリサイズは1GB程度、その他はそのままの値で良さそうです。
 
 このVMは90日で期限切れになってしまうので、起動する前にsnapshotを取っておきましょう。
-![VirtualBoxのsnapshot](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/)
+![VirtualBoxのsnapshot](https://github.com/TakesxiSximada/gist/blob/master/windows-virtual-machines/virtualbox-snapshot.png)
 
 VMを起動します。
-![Windows VM](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/)
+![Windows VM](https://github.com/TakesxiSximada/gist/blob/master/windows-virtual-machines/windows-vm.png)
