@@ -458,7 +458,7 @@ iex(3)> {:ok, channel} = AMQP.Channel.open(connection)
 接続状況は管理画面から確認できます。
 http://127.0.0.1:15672/#/connections
 
-![RabbitMQ管理画面のコネクション状況](http://example.com/rabbitmq-admin-connection.png)
+![RabbitMQ管理画面のコネクション状況](https://raw.githubusercontent.com/TakesxiSximada/gist/master/elixir-tips-rabbmitmq/rabbitmq-admin-connection.png)
 
 次にQueueを作成します。AMQP.Queue.declare()を使うと宣言的にQueueを作成できます。
 
@@ -471,7 +471,7 @@ iex(4)> AMQP.Queue.declare(channel, "hello")
 Queueの状況も管理画面から確認できます。
 http://127.0.0.1:15672/#/queues
 
-![RabbitMQ管理画面のQueue状況](http://example.com/rabbitmq-admin-queue.png)
+![RabbitMQ管理画面のQueue状況](https://github.com/TakesxiSximada/gist/blob/master/elixir-tips-rabbmitmq/rabbitmq-admin-queue.png?raw=true)
 
 それではAMQP.Basic.publish()を使ってメッセージをpublishします。
 
@@ -487,7 +487,7 @@ http://127.0.0.1:15672/#/queues/%2F/hello
 
 `Get Message(s)`ボタンを押すと、最初のメッセージを表示します。
 
-![RabbitMQ管理画面のメッセージの確認](http://example.com/rabbitmq-admin-message.png)
+![RabbitMQ管理画面のメッセージの確認](https://github.com/TakesxiSximada/gist/blob/master/elixir-tips-rabbmitmq/rabbitmq-admin-message.png?raw=true)
 
 
 最後に接続を閉じます。
