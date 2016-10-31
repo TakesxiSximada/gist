@@ -16,6 +16,8 @@
 
 ### C
 
+FizzBuzz.c
+
 ```
 #include <stdio.h>
 
@@ -43,6 +45,8 @@ Target: x86_64-apple-darwin14.5.0
 Thread model: posix
 ```
 ### C++
+
+FizzBuzz.cpp:
 
 ```
 #include <iostream>
@@ -76,6 +80,8 @@ Thread model: posix
 
 ### Java
 
+FizzBuzz.java:
+
 ```
 class FizzBuzz {
     public static void main (String[] args){
@@ -102,6 +108,8 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.45-b02, mixed mode)
 ```
 ### Ruby
 
+FizzBuzz.rb:
+
 ```
 #! /usr/bin/env ruby
 (0..100).each do |ii|
@@ -123,6 +131,8 @@ ruby 2.4.0dev (2016-10-02 trunk 56323) [x86_64-darwin14]
 
 ### Common Lisp
 
+FizzBuzz.cl:
+
 ```
 (loop for ii from 1 to 100 do
      (cond
@@ -139,6 +149,8 @@ SBCL 1.3.10
 ```
 
 ### Elixir
+
+FizzBuzz.exs:
 
 ```
 (1..100) |> Enum.each(fn (ii) -> cond do
@@ -158,6 +170,8 @@ Elixir 1.3.4
 ```
 
 ### Go
+
+FizzBuzz.go:
 
 ```
 package main
@@ -188,6 +202,8 @@ go version go1.7.1 darwin/amd64
 ```
 ### Python
 
+FizzBuzz.py:
+
 ```
 #! /usr/bin/env python
 import itertools
@@ -207,10 +223,12 @@ $ python -V
 Python 3.5.2 :: Continuum Analytics, Inc.
 ```
 
-### Cython
+
 
 
 ### Node.js
+
+FizzBuzz.js:
 
 ```
 for(var ii=1; true; ii++){
@@ -232,6 +250,23 @@ v6.7.0
 ```
 ### PHP
 
+FizzBuzz.php:
+
+```
+<?php
+for($ii = 0; $ii <= 100; $ii++){
+    $msg = "";
+    if ($ii % 3 == 0) {
+        $msg .= "Fizz";
+    }
+    if ($ii % 5 == 0) {
+        $msg .= "Buzz";
+    }
+    print (empty($msg) ? $ii : $msg) . "\n";
+}
+?>
+```
+
 ```
 $ php -v
 PHP 5.5.27 (cli) (built: Jul 23 2015 00:21:59)
@@ -239,6 +274,8 @@ Copyright (c) 1997-2015 The PHP Group
 Zend Engine v2.5.0, Copyright (c) 1998-2015 Zend Technologies
 ```
 ### Lua
+
+FizzBuzz.lua:
 
 ```
 for ii = 1, 100 do
@@ -260,6 +297,8 @@ Lua 5.2.4  Copyright (C) 1994-2015 Lua.org, PUC-Rio
 ```
 
 ### Perl
+
+FizzBuzz.pl:
 
 ```
 #! /usr/bin/env perl5
@@ -293,9 +332,88 @@ this system using "man perl" or "perldoc perl".  If you have access to the
 Internet, point your browser at http://www.perl.org/, the Perl Home Page.
 ```
 
+### Cython
+
+FizzBuzzCy.pyx:
+
+```
+cdef int ii = 0
+for ii in range(1, 101):
+    if ii % 15 == 0:
+        print("FizzBuzz")
+    elif ii % 3 == 0:
+        print("Fizz")
+    elif ii % 5 == 0:
+        print("Buzz")
+    else:
+        print(ii)
+
+```
+
+```
+$ cython --version
+Cython version 0.24.1
+$ python --version
+Python 3.5.2 :: Continuum Analytics, Inc.
+```
+
 <!-- ### C# -->
-<!-- ### Objective-C -->
-<!-- ### Swift -->
+### Objective-C
+
+FizzBuzz.m:
+
+```
+#include <stdio.h>
+
+int main(int argc, const char * argv[]){
+     for(int ii = 0; ii <= 100; ii++){
+          if (ii % 15 == 0){
+               printf("FizzBuzz\n");
+          } else if (ii % 3 == 0) {
+               printf("Fizz\n");
+          } else if (ii % 5 == 0) {
+               printf("Buzz\n");
+          } else {
+               printf("%d\n", ii);
+          }
+     };
+     return 0;
+}
+```
+
+```
+$ gcc -v
+Configured with: --prefix=/Applications/Xcode.app/Contents/Developer/usr --with-gxx-include-dir=/usr/include/c++/4.2.1
+Apple LLVM version 7.0.0 (clang-700.0.72)
+Target: x86_64-apple-darwin14.5.0
+Thread model: posix
+```
+
+### Swift
+
+FizzBuzz.swift:
+
+```
+(1...100).map {(ii: Int) -> String in
+    if ii % 15 == 0 {
+        return "FizzBuzz"
+    } else if ii % 3 == 0 {
+        return "Fizz"
+    } else if ii % 5 == 0 {
+        return "Buzz"
+    } else {
+        return String(ii)
+    }
+}.forEach { (msg: String) in
+    print(msg)
+}
+```
+
+```
+$ swiftc --version
+Apple Swift version 2.0 (swiftlang-700.0.59 clang-700.0.72)
+Target: x86_64-apple-darwin14.5.0
+```
 <!-- ### awk -->
 <!-- ### jq -->
 <!-- ### CSS -->
