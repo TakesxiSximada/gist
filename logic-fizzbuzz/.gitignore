@@ -1,0 +1,5 @@
+*.out
+*.beam
+*.pyc
+*.class
+erl_crash.dump
