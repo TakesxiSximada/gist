@@ -13,17 +13,9 @@ module.exports = {
         path: dst_path,
     },
     module: {
-        // preLoaders: [
-        //     {
-        //         test: /\.tag$/,
-        //         loader: 'riotjs-loader',
-        //         query: {type: 'none'},
-        //         exclude: /(node_modules|bower_components)/,
-        //     },
-        // ],
-        loaders: [
+        preLoaders: [
             {
-                test: /\.tag$/,
+                test: /\.(tag)$/,
                 loader: 'riotjs-loader',
                 query: {type: 'none'},
                 exclude: /(node_modules|bower_components)/,
